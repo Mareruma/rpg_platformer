@@ -1,0 +1,40 @@
+{
+  "level1.5": [
+    {
+      "id": "firebolt-spell1.5",
+      "name": "Firebolt",
+      "damage": 2,
+      "type": "ranged",
+      "distance": 30,
+      "effect": "burning"
+    }
+  ],
+  "level2": [
+    {
+      "id": "frost-spell2",
+      "name": "Frost",
+      "damage": 2,
+      "type": "ranged",
+      "distance": 30,
+      "effect": "Slow"
+    },
+    {
+      "id": "shield-spell2",
+      "name": "Shield",
+      "damage": 0.3,
+      "type": "self",
+      "distance": 0,
+      "effect": "protect"
+    }
+  ],
+  "level2.5": [
+    {
+      "id": "m-armor-spell3",
+      "name": "Mage Armor",
+      "damage": 0.5,
+      "type": "ranged",
+      "distance": 20,
+      "effect": "protect"
+    }
+  ]
+}

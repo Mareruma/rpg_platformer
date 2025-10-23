@@ -1,0 +1,5 @@
+{
+    "level1": ["Light", "Medium"],
+    "level2": ["Light", "Medium", "Shields"],
+    "level3": ["Light", "Medium", "Shields", "Heavy"]
+}

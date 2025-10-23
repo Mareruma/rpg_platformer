@@ -1,0 +1,66 @@
+{
+  "level1": [
+    {
+      "id": "firebolt-spell1",
+      "name": "Firebolt",
+      "damage": 1,
+      "type": "ranged",
+      "distance": 20,
+      "effect": "burning"
+    }
+  ],
+  "level2": [
+    {
+      "id": "frost-spell2",
+      "name": "Frost",
+      "damage": 2,
+      "type": "ranged",
+      "distance": 30,
+      "effect": "Slow"
+    },
+    {
+      "id": "shield-spell2",
+      "name": "Shield",
+      "damage": 0.3,
+      "type": "self",
+      "distance": 0,
+      "effect": "protect"
+    }
+  ],
+  "level3": [
+    {
+      "id": "m-armor-spell3",
+      "name": "Mage Armor",
+      "damage": 0.5,
+      "type": "ranged",
+      "distance": 20,
+      "effect": "protect"
+    }
+  ],
+  "level4": [
+    {
+      "id": "a-splash-spell4",
+      "name": "Acid splash",
+      "damage": 6,
+      "type": "ranged",
+      "distance": 40,
+      "effect": "Damage"
+    },
+    {
+      "id": "heal-spell4",
+      "name": "Heal",
+      "damage": 3,
+      "type": "self",
+      "distance": 0,
+      "effect": "Heal"
+    },
+    {
+      "id": "fireball-spell4",
+      "name": "Fireball",
+      "damage": 4,
+      "type": "ranged",
+      "distance": 40,
+      "effect": "burning"
+    }
+  ]
+}

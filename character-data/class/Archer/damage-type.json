@@ -1,0 +1,5 @@
+{
+    "level1": ["Ranged", "Spells-lv1.5"],
+    "level2": ["Ranged", "Spells-lv2"],
+    "level3": ["Ranged", "Spells-lv2.5", "Melee"]
+}

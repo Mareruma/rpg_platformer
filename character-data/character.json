@@ -1,0 +1,29 @@
+{
+    "class": "Wizard",
+    "level": 1,
+    "hp": 5,
+    "armor": [
+        "Light",
+        "Medium"
+    ],
+    "damage": 2.5,
+    "damage-type": [
+        "Ranged"
+    ],
+    "spells": {
+        "Spells-lv1.5": 1
+    },
+    "spell": {
+        "Spells-lv1.5": [
+            {
+                "id": "firebolt-spell1.5",
+                "name": "Firebolt",
+                "damage": 2,
+                "type": "ranged",
+                "distance": 30,
+                "effect": "burning"
+            }
+        ]
+    },
+    "name": "Legolas"
+}
