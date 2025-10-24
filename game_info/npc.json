@@ -1,0 +1,9 @@
+{
+    "npc1": {
+        "dialogue_index": 1,
+        "dialogue": [
+            "Ah, labi, ceļš uz ziemeļiem ir drošs."
+        ],
+        "responses": []
+    }
+}
