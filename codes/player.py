@@ -1,4 +1,3 @@
-# player.py
 import pygame
 import os
 from codes.player_stats import PlayerStats

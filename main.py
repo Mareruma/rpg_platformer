@@ -19,7 +19,6 @@ class Camera:
         self.offset.y = target.rect.centery - SCREEN_HEIGHT // 2
 
 
-# Funkcija — savāc kolīzijas flīzes
 def get_solid_tiles(map_data):
     tiles = []
     for layer in map_data.tmx_data.visible_layers:
@@ -41,12 +40,10 @@ current_map = GameMap("level1.tmx")
 player = Player(*current_map.spawn_point)
 camera = Camera()
 
-door_cooldown = 1000  # ms
+door_cooldown = 1000
 last_door_use = 0
-
 tiles = get_solid_tiles(current_map)
 
-# --- Spēles cikls ---
 running = True
 while running:
     dt = clock.tick(60) / 1000
@@ -58,12 +55,18 @@ while running:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_i:
                 player.toggle_stats()
+            elif event.key == pygame.K_t:
+                for npc in current_map.npcs:
+                    if player.rect.colliderect(npc.rect):
+                        npc.interact()
+            for npc in current_map.npcs:
+                npc.handle_input(event)
 
     # --- Input un fizika ---
     keys = pygame.key.get_pressed()
     player.handle_input(keys)
     player.apply_gravity()
-    player.update(tiles, current_map.traps)  # tagad traps tiek nodots player.update()
+    player.update(tiles, current_map.traps)
     camera.update(player)
 
     # --- Miršanas pārbaude ---
@@ -76,19 +79,12 @@ while running:
     current_map.draw(screen, camera)
     player.draw(screen, camera)
 
-    # --- Durvju loģika ar cooldown ---
+    # --- Door loģika ---
     for door in current_map.doors:
         if player.rect.colliderect(door["rect"]):
             if door["target"] and door["pair"]:
                 text = font.render("Press O to enter", True, (255, 255, 255))
-                screen.blit(
-                    text,
-                    (
-                        door["rect"].x - camera.offset.x,
-                        door["rect"].y - 20 - camera.offset.y
-                    )
-                )
-
+                screen.blit(text, (door["rect"].x - camera.offset.x, door["rect"].y - 20 - camera.offset.y))
                 if keys[pygame.K_o] and current_time - last_door_use >= door_cooldown:
                     last_door_use = current_time
                     new_map = GameMap(door["target"])
@@ -101,6 +97,16 @@ while running:
                     current_map = new_map
                     tiles = get_solid_tiles(current_map)
                     break
+
+    # --- NPC Talk prompt ---
+    for npc in current_map.npcs:
+        if player.rect.colliderect(npc.rect) and not npc.in_dialogue:
+            t_text = font.render("Press T to talk", True, (255, 255, 255))
+            screen.blit(t_text, (npc.rect.x - camera.offset.x, npc.rect.y - 20 - camera.offset.y))
+
+    # --- NPC dialogu zīmēšana ---
+    for npc in current_map.npcs:
+        npc.draw_dialogue(screen)
 
     pygame.display.flip()
 

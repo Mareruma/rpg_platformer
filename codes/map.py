@@ -8,21 +8,24 @@ class GameMap:
         self.load_map()
 
     def load_map(self):
+        from codes.npc import NPC  # Importē šeit, lai izvairītos no cikliskas importēšanas
         # Ielādē TMX failu
         self.tmx_data = load_pygame(os.path.join("maps", self.filename))
         self.tilewidth = self.tmx_data.tilewidth
         self.tileheight = self.tmx_data.tileheight
 
-        # Spawna punkts
+        # Datu struktūras
         self.spawn_point = (100, 100)
         self.doors = []
         self.traps = []
+        self.npcs = []
 
         # Objektu lasīšana
         for obj in self.tmx_data.objects:
             # Spawna punkts
             if obj.type == "PlayerSpawn":
                 self.spawn_point = (int(obj.x), int(obj.y))
+
             # Durvis
             elif obj.type == "Door":
                 rect = pygame.Rect(int(obj.x), int(obj.y), int(obj.width), int(obj.height))
@@ -34,6 +37,7 @@ class GameMap:
                     "pair": pair,
                     "target": target
                 })
+
             # Trap
             elif obj.type == "Trap":
                 rect = pygame.Rect(int(obj.x), int(obj.y), int(obj.width), int(obj.height))
@@ -44,8 +48,13 @@ class GameMap:
                     "rect": rect,
                     "damage": damage,
                     "damage_speed": damage_speed,
-                    "last_hit": 0  # laiks pēdējam sitienam ms
+                    "last_hit": 0
                 })
+
+            # NPC
+            elif obj.type and obj.type.startswith("npc"):
+                npc = NPC(obj)
+                self.npcs.append(npc)
 
     def draw(self, screen, camera):
         # Tiles layeri
@@ -56,17 +65,16 @@ class GameMap:
                         screen.blit(
                             image,
                             (x * self.tilewidth - camera.offset.x,
-                            y * self.tileheight - camera.offset.y)
+                             y * self.tileheight - camera.offset.y)
                         )
 
-        # Object layeri – tikai vizualizācija, ne solid
+        # Object layeri — vizuālie elementi
         for obj in self.tmx_data.objects:
             rect = pygame.Rect(
                 obj.x, obj.y,
                 getattr(obj, "width", 32),
                 getattr(obj, "height", 32)
             )
-            # Pielāgo kamera offset
             rect.topleft = (rect.x - camera.offset.x, rect.y - camera.offset.y)
 
             if obj.type == "Trap":
@@ -78,5 +86,8 @@ class GameMap:
                 door_image = pygame.transform.scale(door_image, (int(obj.width), int(obj.height)))
                 screen.blit(door_image, (obj.x - camera.offset.x, obj.y - camera.offset.y))
             elif obj.type == "PlayerSpawn":
-                pygame.draw.rect(screen, (0, 0, 255), rect, 2)  # zils spawnam
+                pygame.draw.rect(screen, (0, 0, 255), rect, 2)
 
+        # NPC zīmēšana
+        for npc in self.npcs:
+            npc.draw(screen, camera)

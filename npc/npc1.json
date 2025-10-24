@@ -1,0 +1,26 @@
+{
+    "dialogue": ["Sveiks, svešiniek!", "Ko tu vēlies uzzināt?"],
+    "responses": ["Kas šī ir par vietu?", "Vai te ir droši?", "Atā!"],
+    "reactions": {
+        "Kas šī ir par vietu?": {
+            "dialogue": ["Šī ir Vecā pilsēta. Reiz tā bija dižena, tagad — tikai drupas."],
+            "responses": ["Vai šeit dzīvo kāds vēl?", "Atā!"]
+        },
+        "Vai te ir droši?": {
+            "dialogue": ["Naktī ne. Trapsi un zvēri klīst apkārt."],
+            "responses": ["Kas tie tādi?", "Atā!"]
+        },
+        "Kas tie tādi?": {
+            "dialogue": ["Vecās maģijas radības. Labāk paliec pie gaismas."],
+            "responses": ["Paldies!", "Atā!"]
+        },
+        "Atā!": {
+            "dialogue": ["Lai tev drošs ceļš."],
+            "responses": []
+        },
+        "Paldies!": {
+            "dialogue": ["Nav par ko!"],
+            "responses": []
+        }
+    }
+}
