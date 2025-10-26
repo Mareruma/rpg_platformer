@@ -78,7 +78,7 @@ class GameMap:
             rect.topleft = (rect.x - camera.offset.x, rect.y - camera.offset.y)
 
             if obj.type == "Trap":
-                trap_image = pygame.image.load("textures/map/trap.png").convert_alpha()
+                trap_image = pygame.image.load("textures/map/trap1.png").convert_alpha()
                 trap_image = pygame.transform.scale(trap_image, (int(obj.width), int(obj.height)))
                 screen.blit(trap_image, (obj.x - camera.offset.x, obj.y - camera.offset.y))
             elif obj.type == "Door":

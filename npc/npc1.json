@@ -1,23 +1,209 @@
 {
   "dialogue": [
-    "Sveiks, ceļiniek!",
-    "Ko tu dari šeit?"
+    "Greetings, traveler!",
+    "What are you doing here, in this grim dungeon?"
   ],
   "responses": [
-    "Esmu tikai garāmgājējs.",
-    "Meklēju kādu darbu."
+    "I'm just wandering around.",
+    "I'm looking for treasure.",
+    "Maybe you need some help?"
   ],
   "reactions": {
-    "Esmu tikai garāmgājējs.": {
-      "dialogue": ["Ah, labi, ceļš uz ziemeļiem ir drošs."],
+    "I'm just wandering around.": {
+      "dialogue": [
+        "Wandering without a purpose in such a place is dangerous...",
+        "Be careful, these walls hold more than just dust.",
+        "Stay safe, wanderer. Darkness is unforgiving."
+      ],
+      "responses": [
+        "What do you mean?",
+        "I'm not afraid of the dark."
+      ]
+    },
+    "What do you mean?": {
+      "dialogue": [
+        "Long ago, a demon was imprisoned here.",
+        "I tried to drive it away myself, but it seems... I failed.",
+        "Think carefully before wandering deeper."
+      ],
+      "responses": [
+        "Are you a wizard?",
+        "Is the demon still here?"
+      ]
+    },
+    "Are you a wizard?": {
+      "dialogue": [
+        "I was... once I was Galderion the Shaded, highest of the Council of Light.",
+        "Now I am just an old wizard trying to find a way out.",
+        "May your path be brighter than mine."
+      ],
+      "responses": [
+        "Maybe I can help you find the exit.",
+        "How did you lose your way?"
+      ]
+    },
+    "How did you lose your way?": {
+      "dialogue": [
+        "Magic here is twisted. Every turn changes its shape.",
+        "I tried using my orb of light, but it went out...",
+        "Beware the tricks of this place."
+      ],
+      "responses": [
+        "Maybe I can relight it.",
+        "This sounds like a curse."
+      ]
+    },
+    "Maybe I can relight it.": {
+      "dialogue": [
+        "If you have a flame pure of heart, it might work.",
+        "Take this orb and touch it with your light.",
+        "Even a small spark can light the darkest path."
+      ],
+      "responses": [
+        "I try to activate it.",
+        "I don't know if I have enough power."
+      ]
+    },
+    "I try to activate it.": {
+      "dialogue": [
+        "The orb glows... the room shifts... beams of light reveal a new path!",
+        "Excellent! You may be the one to guide me out of here.",
+        "The light will guide you, take care."
+      ],
+      "responses": [
+        "You go first, I'll protect you.",
+        "I won't trust you so easily, old wizard."
+      ]
+    },
+    "I'm not afraid of the dark.": {
+      "dialogue": [
+        "Then you are either brave... or foolish.",
+        "We'll see which it is.",
+        "Bravery has its price, tread wisely."
+      ],
+      "responses": [
+        "Are you testing me?",
+        "Only fools sit in darkness and wait for light."
+      ]
+    },
+    "Only fools sit in darkness and wait for light.": {
+      "dialogue": [
+        "Ha! You have a sharp tongue. I like that.",
+        "Perhaps you truly have the spark that can ignite this orb.",
+        "Keep your spark alive, it may save you."
+      ],
+      "responses": [
+        "Tell me more about this orb.",
+        "How will it help us escape?"
+      ]
+    },
+    "I'm looking for treasure.": {
+      "dialogue": [
+        "Treasure, you say? Here you'll find only dust and regret.",
+        "But... maybe you can find something that once belonged to me.",
+        "Greed can blind even the keenest eyes."
+      ],
+      "responses": [
+        "What exactly did you lose?",
+        "If there's a reward, I can help."
+      ]
+    },
+    "What exactly did you lose?": {
+      "dialogue": [
+        "My staff — it was made of blue crystal.",
+        "Without it, I am nothing more than an old man with long hair.",
+        "A lost artifact can cost more than gold."
+      ],
+      "responses": [
+        "Where did you last see it?",
+        "Why is it so important?"
+      ]
+    },
+    "Where did you last see it?": {
+      "dialogue": [
+        "It fell into the deep hall guarded by stone golems.",
+        "I cannot enter there anymore... but you, perhaps, can.",
+        "Only the brave may claim what is lost."
+      ],
+      "responses": [
+        "I will retrieve it for you.",
+        "That sounds too dangerous."
+      ]
+    },
+    "I will retrieve it for you.": {
+      "dialogue": [
+        "You honor me, traveler.",
+        "Bring it, and I will show you the portal of light that leads outside.",
+        "May fortune favor your steps."
+      ],
       "responses": []
     },
-    "Meklēju kādu darbu.": {
-      "dialogue": ["Tad tev paveicies, man tieši vajag palīdzību!"],
-      "responses": ["Kas jādara?", "Varbūt vēlāk."]
+    "That sounds too dangerous.": {
+      "dialogue": [
+        "I understand... fear is natural.",
+        "Perhaps another time, when you are ready.",
+        "Caution is wise, but opportunity may pass."
+      ],
+      "responses": []
     },
-    "Kas jādara?": {
-      "dialogue": ["Palīdzi pacelt šo smago riteni."],
+    "Maybe you need some help?": {
+      "dialogue": [
+        "Indeed... I have been trapped in this dungeon for days.",
+        "The tunnels shift, and my mind grows foggy.",
+        "Even small help can be the difference between life and death."
+      ],
+      "responses": [
+        "I can help you get out.",
+        "Why don't you use magic?"
+      ]
+    },
+    "Why don't you use magic?": {
+      "dialogue": [
+        "My magic no longer obeys me. This place twists it.",
+        "Every spell here becomes a whisper in a demon's ear.",
+        "Beware, some places are alive and watchful."
+      ],
+      "responses": [
+        "Then I will help without magic.",
+        "This sounds horrifying... I will only stay a moment."
+      ]
+    },
+    "Then I will help without magic.": {
+      "dialogue": [
+        "Then you are brave and pure of heart.",
+        "If we escape, I will grant you a blessing — the Flame of the Old Light.",
+        "Your courage will not be forgotten."
+      ],
+      "responses": []
+    },
+    "What needs to be done?": {
+      "dialogue": [
+        "Help me lift this heavy wheel — under it lies a passage.",
+        "I can no longer do it alone.",
+        "Every effort has its reward."
+      ],
+      "responses": [
+        "Alright, let's lift it together.",
+        "I'm not ready for this."
+      ]
+    },
+    "Alright, let's lift it together.": {
+      "dialogue": [
+        "With your strength, it worked!",
+        "Beneath the wheel, a dark tunnel opens... perhaps there is an exit.",
+        "The path ahead will test you."
+      ],
+      "responses": [
+        "Let's go check it out.",
+        "You go first."
+      ]
+    },
+    "You go first.": {
+      "dialogue": [
+        "Ha, smart move. Alright, but follow closely.",
+        "In the darkness, we might lose each other.",
+        "Stay close, or the shadows will claim you."
+      ],
       "responses": []
     }
   }

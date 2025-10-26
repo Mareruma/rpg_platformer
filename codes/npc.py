@@ -128,23 +128,46 @@ class NPC:
         self._save_progress()
 
     def draw_dialogue(self, screen):
-        """Zīmē dialoga logu"""
+        """Zīmē dialoga logu ar teksta aplaušanu un fonta samazinājumu"""
         if not self.in_dialogue:
             return
 
-        font = pygame.font.SysFont(None, 24)
-        box_rect = pygame.Rect(20, screen.get_height() - 120, screen.get_width() - 40, 100)
+        font = pygame.font.SysFont("Consolas", 20)  # samazināts font size
+        box_rect = pygame.Rect(20, screen.get_height() - 160, screen.get_width() - 40, 140)
         pygame.draw.rect(screen, (20, 20, 20), box_rect)
         pygame.draw.rect(screen, (255, 255, 255), box_rect, 2)
 
-        # NPC teksts
-        if self.dialogue and self.dialogue_index < len(self.dialogue):
-            text = font.render(self.dialogue[self.dialogue_index], True, (255, 255, 255))
-            screen.blit(text, (box_rect.x + 10, box_rect.y + 10))
+        def wrap_text(text, font, max_width):
+            words = text.split(' ')
+            lines = []
+            current_line = ''
+            for word in words:
+                test_line = current_line + (' ' if current_line else '') + word
+                if font.size(test_line)[0] <= max_width:
+                    current_line = test_line
+                else:
+                    lines.append(current_line)
+                    current_line = word
+            if current_line:
+                lines.append(current_line)
+            return lines
 
-        # Spēlētāja atbildes (ja ir)
+        # --- NPC teksts ---
+        npc_lines = []
+        if self.dialogue and self.dialogue_index < len(self.dialogue):
+            npc_lines = wrap_text(self.dialogue[self.dialogue_index], font, box_rect.width - 20)
+
+        y_offset = box_rect.y + 10
+        for line in npc_lines:
+            text_surf = font.render(line, True, (255, 255, 255))
+            screen.blit(text_surf, (box_rect.x + 10, y_offset))
+            y_offset += font.get_linesize()  # automātiska rindu augstuma atskaite
+
+        # --- Spēlētāja atbildes ---
         if self.active_responses:
             for i, response in enumerate(self.active_responses):
-                color = (255, 255, 0) if i == self.selected_response else (200, 200, 200)
-                r_text = font.render(response, True, color)
-                screen.blit(r_text, (box_rect.x + 20, box_rect.y + 40 + i * 20))
+                response_lines = wrap_text(response, font, box_rect.width - 40)
+                for j, line in enumerate(response_lines):
+                    color = (255, 255, 0) if i == self.selected_response else (200, 200, 200)
+                    screen.blit(font.render(line, True, color), (box_rect.x + 20, y_offset))
+                    y_offset += font.get_linesize()
