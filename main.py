@@ -41,7 +41,7 @@ def get_solid_tiles(map_data):
     return tiles
 
 # --- Sākotnējā karte un spēlētājs ---
-current_map = GameMap("level1.tmx")
+current_map = GameMap("starter_area.tmx")
 player = Player(*current_map.spawn_point)
 camera = Camera()
 

@@ -8,9 +8,13 @@ class Player:
         self.vel = pygame.Vector2(0, 0)
         self.speed = 2
         self.jump_strength = 6
+        self.double_jump_multiplier = 0.75  # 75% spēks otrajam lēcienam
         self.gravity = 0.3
+        self.max_fall_speed = 10
         self.on_ground = False
-        self.facing_right = True  # True = skata pa labi, False = pa kreisi
+        self.jump_count = 0
+        self.max_jumps = 2
+        self.facing_right = True
 
         # Statistika
         self.stats = PlayerStats()
@@ -44,14 +48,27 @@ class Player:
         if keys[pygame.K_d]:
             self.vel.x = self.speed
             self.facing_right = True
-        if keys[pygame.K_w] and self.on_ground:
-            self.vel.y = -self.jump_strength
-            self.on_ground = False
+
+        # Lēciens (double jump)
+        if keys[pygame.K_w]:
+            if not hasattr(self, "jump_pressed"):
+                self.jump_pressed = False
+
+            if not self.jump_pressed:
+                if self.jump_count < self.max_jumps:
+                    if self.jump_count == 0:
+                        self.vel.y = -self.jump_strength  # pirmais lēciens
+                    else:
+                        self.vel.y = -self.jump_strength * self.double_jump_multiplier  # otrais lēciens
+                    self.jump_count += 1
+                self.jump_pressed = True
+        else:
+            self.jump_pressed = False
 
     def apply_gravity(self):
         self.vel.y += self.gravity
-        if self.vel.y > 10:
-            self.vel.y = 10
+        if self.vel.y > self.max_fall_speed:
+            self.vel.y = self.max_fall_speed
 
     def update(self, tiles, traps):
         # X kustība
@@ -72,6 +89,7 @@ class Player:
                     self.rect.bottom = tile.top
                     self.vel.y = 0
                     self.on_ground = True
+                    self.jump_count = 0  # atļauj atkal lēkt 2 reizes
                 elif self.vel.y < 0:
                     self.rect.top = tile.bottom
                     self.vel.y = 0
@@ -82,19 +100,19 @@ class Player:
             if self.rect.colliderect(trap["rect"]):
                 if "last_hit" not in trap:
                     trap["last_hit"] = 0
-                interval = 1000 / trap["damage_speed"]  # damage-speed ir hits per sec
+                interval = 1000 / trap["damage_speed"]
                 if current_time - trap["last_hit"] >= interval:
                     self.take_damage(trap["damage"])
                     trap["last_hit"] = current_time
 
-        # Atjauno attēlu atkarībā no skatīšanās virziena
-        if self.image and not self.facing_right:
-            self.image = pygame.transform.flip(self.original_image, True, False)
-        elif self.image and self.facing_right:
-            self.image = self.original_image
+        # Attēla virziens
+        if self.image:
+            if not self.facing_right:
+                self.image = pygame.transform.flip(self.original_image, True, False)
+            else:
+                self.image = self.original_image
 
     def take_damage(self, amount):
-        """Samazina HP un pārbauda nāvi"""
         self.hp -= amount
         if self.hp <= 0:
             self.hp = 0
