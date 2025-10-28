@@ -1,29 +1,47 @@
 {
     "class": "Wizard",
     "level": 1,
-    "hp": 5,
     "armor": [
-        "Light",
-        "Medium"
+        "Light"
     ],
-    "damage": 2.5,
-    "damage-type": [
-        "Ranged"
-    ],
+    "damage-type": [],
     "spells": {
-        "Spells-lv1.5": 1
+        "Spells-lv4": 3
     },
+    "damage": 0.5,
+    "hp": 3,
     "spell": {
-        "Spells-lv1.5": [
+        "Spells-lv4": [
             {
-                "id": "firebolt-spell1.5",
-                "name": "Firebolt",
-                "damage": 2,
+                "id": "a-splash-spell4",
+                "name": "Acid splash",
+                "damage": 6,
                 "type": "ranged",
-                "distance": 30,
+                "distance": 40,
+                "effect": "Damage"
+            },
+            {
+                "id": "heal-spell4",
+                "name": "Heal",
+                "damage": 3,
+                "type": "self",
+                "distance": 0,
+                "effect": "Heal"
+            },
+            {
+                "id": "fireball-spell4",
+                "name": "Fireball",
+                "damage": 4,
+                "type": "ranged",
+                "distance": 40,
                 "effect": "burning"
             }
         ]
     },
-    "name": "Legolas"
+    "name": "pike",
+    "equipment": {
+        "armor": [
+            "robe1"
+        ]
+    }
 }

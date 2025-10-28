@@ -1,9 +1,14 @@
 {
     "npc1": {
-        "dialogue_index": 1,
+        "dialogue_index": 0,
         "dialogue": [
-            "Ah, labi, ceļš uz ziemeļiem ir drošs."
+            "Treasure, you say? Here you'll find only dust and regret.",
+            "But... maybe you can find something that once belonged to me.",
+            "Greed can blind even the keenest eyes."
         ],
-        "responses": []
+        "responses": [
+            "What exactly did you lose?",
+            "If there's a reward, I can help."
+        ]
     }
 }

@@ -3,6 +3,7 @@ import os
 import re
 
 CLASS_DIR = "class"
+ARMOR_FILE = "../equipment/armors/lv1armors.json"  # Tavs armor JSON fails
 
 def list_classes():
     return [d for d in os.listdir(CLASS_DIR) if os.path.isdir(os.path.join(CLASS_DIR, d))]
@@ -11,13 +12,12 @@ def load_class_data(class_name, level):
     class_path = os.path.join(CLASS_DIR, class_name)
     character_data = {"class": class_name, "level": level}
 
-    # Ielādē spell count un detalizētos spelli
+    # Ielādē spell count un detalizētos spellus
     spell_file = os.path.join(class_path, "spells.json")
+    spells_data = {}
     if os.path.exists(spell_file):
         with open(spell_file, "r") as f:
             spells_data = json.load(f)
-    else:
-        spells_data = {}
 
     for file_name in os.listdir(class_path):
         if file_name.endswith(".json") and file_name != "spells.json":
@@ -35,9 +35,8 @@ def load_class_data(class_name, level):
                     for dt in value:
                         match = re.match(r"Spells-lv([\d\.]+)", dt)
                         if match:
-                            lv_name = match.group(0)  # piemēram "Spells-lv2"
-                            # count no spells.json
-                            lv_number = match.group(1)  # "2"
+                            lv_name = match.group(0)
+                            lv_number = match.group(1)
                             available_spells = spells_data.get(f"level{lv_number}", [])
                             count = len(available_spells)
                             spells_info[lv_name] = count
@@ -54,10 +53,37 @@ def choose_from_list(options, prompt="Choose an option: "):
     for i, opt in enumerate(options):
         print(f"{i+1}. {opt}")
     while True:
-        choice = input(prompt)
+        choice = input(prompt).strip()
         if choice.isdigit() and 1 <= int(choice) <= len(options):
             return options[int(choice)-1]
         print("Invalid choice. Try again.")
+
+def choose_armor(character_class, allowed_types):
+    # Ielādē visus armor no JSON
+    if not os.path.exists(ARMOR_FILE):
+        print(f"Armor file {ARMOR_FILE} not found!")
+        return []
+
+    with open(ARMOR_FILE, "r") as f:
+        all_armors = json.load(f)
+
+    # Filtrē armor pēc atļautā tipa
+    valid_armors = [a for a in all_armors if a["type"] in allowed_types]
+    if not valid_armors:
+        print(f"No valid armors for class {character_class}.")
+        return []
+
+    print("\nChoose your armor:")
+    for i, armor in enumerate(valid_armors):
+        print(f"{i+1}. {armor['name']} ({armor['type']}, reduction: {armor['damage-reduce']})")
+
+    while True:
+        choice = input("Select armor by number: ").strip()
+        if choice.isdigit() and 1 <= int(choice) <= len(valid_armors):
+            selected = valid_armors[int(choice)-1]
+            print(f"You selected: {selected['name']}")
+            return [selected["id"]]
+        print("Invalid choice. You must select one armor.")
 
 def choose_spells(character, class_path):
     if "spells" not in character:
@@ -112,8 +138,8 @@ def create_character():
 
     print("Available classes:")
     class_name = choose_from_list(classes, "Select a class by number: ")
-
     class_path = os.path.join(CLASS_DIR, class_name)
+
     levels = set()
     for file_name in os.listdir(class_path):
         if file_name.endswith(".json") and file_name != "spells.json":
@@ -134,6 +160,12 @@ def create_character():
 
     name = input("Enter character name: ").strip()
     character["name"] = name if name else class_name
+
+    # Obligāta armor izvēle
+    allowed_armors = character.get("armor", [])
+    if allowed_armors:
+        selected_armor_ids = choose_armor(class_name, allowed_armors)
+        character["equipment"] = {"armor": selected_armor_ids}
 
     choose_spells(character, class_path)
 

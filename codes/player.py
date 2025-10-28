@@ -1,14 +1,16 @@
 import pygame
 import os
 from codes.player_stats import PlayerStats
+from codes.armors import ArmorManager
 
 class Player:
     def __init__(self, x, y):
         self.rect = pygame.Rect(x, y, 24, 32)
         self.vel = pygame.Vector2(0, 0)
         self.speed = 2
+        self.normal_speed = 2
         self.jump_strength = 6
-        self.double_jump_multiplier = 0.75  # 75% spēks otrajam lēcienam
+        self.double_jump_multiplier = 0.75
         self.gravity = 0.3
         self.max_fall_speed = 10
         self.on_ground = False
@@ -25,6 +27,12 @@ class Player:
         self.level = self.stats.level
         self.spells = self.stats.get_spell_list()
 
+        # Armor manager
+        self.armor_manager = ArmorManager(
+            os.path.join("equipment", "armors", "lv1armors.json"),
+            self.stats.equipment.get("armor", [])
+        )
+
         # Ielādē attēlu pēc klases nosaukuma
         image_path = os.path.join("textures", "character", f"{self.char_class.lower()}.png")
         if os.path.exists(image_path):
@@ -33,13 +41,14 @@ class Player:
             self.image = self.original_image
         else:
             self.image = None
-            print(f"Warning: Image not found at {image_path}")
+            print(f"[⚠️] Image not found at {image_path}")
 
         # GUI
         self.show_stats = False
         self.font = pygame.font.SysFont("consolas", 18)
         self.alive = True
 
+    # --- Input ---
     def handle_input(self, keys):
         self.vel.x = 0
         if keys[pygame.K_a]:
@@ -53,14 +62,12 @@ class Player:
         if keys[pygame.K_w]:
             if not hasattr(self, "jump_pressed"):
                 self.jump_pressed = False
-
-            if not self.jump_pressed:
-                if self.jump_count < self.max_jumps:
-                    if self.jump_count == 0:
-                        self.vel.y = -self.jump_strength  # pirmais lēciens
-                    else:
-                        self.vel.y = -self.jump_strength * self.double_jump_multiplier  # otrais lēciens
-                    self.jump_count += 1
+            if not self.jump_pressed and self.jump_count < self.max_jumps:
+                if self.jump_count == 0:
+                    self.vel.y = -self.jump_strength
+                else:
+                    self.vel.y = -self.jump_strength * self.double_jump_multiplier
+                self.jump_count += 1
                 self.jump_pressed = True
         else:
             self.jump_pressed = False
@@ -89,15 +96,17 @@ class Player:
                     self.rect.bottom = tile.top
                     self.vel.y = 0
                     self.on_ground = True
-                    self.jump_count = 0  # atļauj atkal lēkt 2 reizes
+                    self.jump_count = 0
                 elif self.vel.y < 0:
                     self.rect.top = tile.bottom
                     self.vel.y = 0
 
-        # Pieskaršanās slazdiem
+        # Slazdi
         current_time = pygame.time.get_ticks()
+        touching_trap = False
         for trap in traps:
             if self.rect.colliderect(trap["rect"]):
+                touching_trap = True
                 if "last_hit" not in trap:
                     trap["last_hit"] = 0
                 interval = 1000 / trap["damage_speed"]
@@ -105,15 +114,21 @@ class Player:
                     self.take_damage(trap["damage"])
                     trap["last_hit"] = current_time
 
+        self.speed = 1 if touching_trap else self.normal_speed
+
         # Attēla virziens
         if self.image:
-            if not self.facing_right:
-                self.image = pygame.transform.flip(self.original_image, True, False)
-            else:
-                self.image = self.original_image
+            self.image = (
+                pygame.transform.flip(self.original_image, True, False)
+                if not self.facing_right
+                else self.original_image
+            )
 
     def take_damage(self, amount):
-        self.hp -= amount
+        reduction = self.armor_manager.get_damage_reduction()
+        reduced_amount = amount * (1 - reduction)
+        self.hp -= reduced_amount
+        # print(f"[💥] Took {reduced_amount:.2f} dmg (reduction {reduction*100:.0f}%)")
         if self.hp <= 0:
             self.hp = 0
             self.alive = False
@@ -121,6 +136,7 @@ class Player:
     def toggle_stats(self):
         self.show_stats = not self.show_stats
 
+    # --- Drawing ---
     def draw(self, screen, camera):
         draw_pos = self.rect.move(-camera.offset.x, -camera.offset.y)
         if self.image:
@@ -135,14 +151,14 @@ class Player:
             self.draw_death_message(screen)
 
     def draw_stats_gui(self, screen):
+        armor_info = self.armor_manager.get_armor_info()
         lines = [
             f"Name: {self.name}",
             f"Class: {self.char_class}",
             f"Level: {self.level}",
-            f"HP: {self.hp}",
+            f"HP: {int(self.hp)}",
             f"Damage: {self.damage}",
-            f"Damage type: {', '.join(self.stats.damage_type)}",
-            f"Armor: {', '.join(self.stats.armor)}",
+            f"Armor: {armor_info}",
             "",
             "Spells:"
         ]

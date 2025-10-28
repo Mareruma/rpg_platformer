@@ -1,0 +1,44 @@
+[
+    {
+        "id": "robe1",
+        "name": "Robe I",
+        "type": "Light",
+        "damage-reduce": 0.1
+    },
+    {
+        "id": "leather1",
+        "name": "Leather I",
+        "type": "Medium",
+        "damage-reduce": 0.2
+    },
+    {
+        "id": "chain1",
+        "name": "Chain I",
+        "type": "Medium",
+        "damage-reduce": 0.3
+    },
+    {
+        "id": "studded1",
+        "name": "Studded I",
+        "type": "Medium",
+        "damage-reduce": 0.4
+    },
+    {
+        "id": "breastplate1",
+        "name": "Breastplate I",
+        "type": "Heavy",
+        "damage-reduce": 0.5
+    },
+    {
+        "id": "h-mail1",
+        "name": "Heavy Mail I",
+        "type": "Heavy",
+        "damage-reduce": 0.6
+    },
+    {
+        "id": "l-plate1",
+        "name": "Livermory Plate I",
+        "type": "Heavy",
+        "damage-reduce": 0.75
+    }
+]

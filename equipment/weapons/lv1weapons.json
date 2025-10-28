@@ -1,0 +1,50 @@
+[
+  {
+    "id": "sword-1",
+    "rarity": 1,
+    "name": "Sword I",
+    "damage": 2,
+    "hit-speed": 1,
+    "range": 2
+  },
+  {
+    "id": "scythe-1",
+    "rarity": 1,
+    "name": "Scythe I",
+    "damage": 1.5,
+    "hit-speed": 1.5,
+    "range": 3
+  },
+  {
+    "id": "s-sword-1",
+    "rarity": 1,
+    "name": "Short Sword I",
+    "damage": 0.75,
+    "hit-speed": 0.75,
+    "range": 1.5
+  },
+  {
+    "id": "bow-1",
+    "rarity": 1,
+    "name": "Bow I",
+    "damage": 1.5,
+    "hit-speed": 1,
+    "range": 15
+  },
+  {
+    "id": "s-bow-1",
+    "rarity": 1,
+    "name": "Shortbow I",
+    "damage": 0.75,
+    "hit-speed": 1,
+    "range": 12
+  },
+  {
+    "id": "l-bow-1",
+    "rarity": 1,
+    "name": "Longbow I",
+    "damage": 2,
+    "hit-speed": 2,
+    "range": 20
+  }
+]
