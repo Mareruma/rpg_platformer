@@ -38,7 +38,12 @@
  <objectgroup id="2" name="Entity">
   <object id="1" type="PlayerSpawn" gid="1" x="512" y="480" width="32" height="32"/>
   <object id="2" type="Door" gid="1" x="288" y="480" width="32" height="32"/>
-  <object id="3" type="Door" gid="1" x="864" y="416" width="32" height="32"/>
+  <object id="3" type="Door" gid="1" x="864" y="416" width="32" height="32">
+   <properties>
+    <property name="pair" value="1"/>
+    <property name="target" value="level1.tmx"/>
+   </properties>
+  </object>
   <object id="4" type="Door" gid="1" x="640" y="320" width="32" height="32"/>
   <object id="5" type="Door" gid="1" x="288" y="320" width="32" height="32"/>
   <object id="7" type="npc1" gid="28" x="640" y="480" width="32" height="32"/>

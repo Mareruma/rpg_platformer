@@ -16,7 +16,7 @@ class Player:
         self.on_ground = False
         self.jump_count = 0
         self.max_jumps = 2
-        self.facing_right = True
+        self.facing_right = False
 
         # Statistika
         self.stats = PlayerStats()
@@ -53,10 +53,10 @@ class Player:
         self.vel.x = 0
         if keys[pygame.K_a]:
             self.vel.x = -self.speed
-            self.facing_right = False
+            self.facing_right = True
         if keys[pygame.K_d]:
             self.vel.x = self.speed
-            self.facing_right = True
+            self.facing_right = False
 
         # Lēciens (double jump)
         if keys[pygame.K_w]:
